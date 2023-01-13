@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container-fluid" id="feedback">
+    <h4>Özetleme algoritmanızı seçiniz.</h4>
+</div>
+<form method="post" action="/dunya">
+    <div class="form-group">
+        <h5 class="sr-only" for="fb">Algoritmanızı seçiniz</h5>
+    </div>
+
+    <div class="d-flex">
+        <select class="form-control" id="rating" name="operator">
+            <option value="1" {% if value=='1' or value==1 %} selected="True" {% endif %}>Orjinal Metin</option>
+            <option value="2" {% if value=='2' %} selected="True" {% endif %}>Luhn</option>
+            <option value="3" {% if value=='3' %} selected="True" {% endif %}>Lexrank</option>
+            <option value="4" {% if value=='4' %} selected="True" {% endif %}>Pytextrank</option>
+            <option value="5" {% if value=='5' %} selected="True" {% endif %}>LSA</option>
+            <option value="6" {% if value=='6' %} selected="True" {% endif %}>Hepsi</option>
+            <option value="7" {% if value=='7' %} selected="True" {% endif %}>Ortak Cümleler</option>
+            <option value="8" {% if value=='8' %} selected="True" {% endif %}>Giso</option>
+        </select>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">Özetle</button>
+        </div>
+    </div>
+
+</form>
+
+
+
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Arama</legend>
+            <div class="form-group">
+                {{ form.searchField.label(class="form-control-label") }}
+                {{ form.searchField(class="form-control form-control-lg is-invalid") }}
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{ form.search(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>
+
+
+
+{% for new in myNews %}
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <h2 class="news-title"><a class="article-title" target=”_blank” href={{ new.url }}>{{ new.header }}</a></h2>
+            <a target=”_blank” href={{ new.url }}><img class="article-img" src={{ new.imageUrl }}></a> <small
+                class="text-muted">{{ new.date }}</small>
+        </div>
+        <p class="news-content">{{ new.content }}</p>
+
+    </div>
+</article>
+{% endfor %}
+{% endblock content %}
